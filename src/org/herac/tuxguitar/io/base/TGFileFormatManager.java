@@ -35,6 +35,10 @@ public class TGFileFormatManager {
 		if(instance == null){
 			instance = new TGFileFormatManager();
 			instance.addInputStream(new GP5InputStream(new GTPSettings()));
+			instance.addInputStream(new GP4InputStream(new GTPSettings()));
+			instance.addInputStream(new GP3InputStream(new GTPSettings()));
+			instance.addInputStream(new GP2InputStream(new GTPSettings()));
+			instance.addInputStream(new GP1InputStream(new GTPSettings()));
 			instance.addInputStream(new PTInputStream());
 		}
 		return instance;
