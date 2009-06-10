@@ -16,7 +16,7 @@ public class OpenerTest {
 	public static void main(String[] args) {
 		TGSongLoader l = new TGSongLoader();
 		try {
-			TGSong song = PrateekAPI.loadSong("C:/Documents and Settings/Prateek Tandon/My Documents/USC Stuff/guitar/spain.gp3");
+			TGSong song = PrateekAPI.loadSong("C:/Documents and Settings/Prateek Tandon/Desktop/sunshine_of_your_love_ver2.gp3");
 			System.out.println("THE SONG " + song.getName());
 			TGTrack trak = song.getTrack(1);
 			TGMeasure m = trak.getMeasure(0);
