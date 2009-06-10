@@ -4,9 +4,18 @@
     <property name="src" location="src"/>
     <property name="build" location="build"/>
 	<property name="drivers" location="drivers"/>
+    <property name="freetts.jar" location="drivers/freetts.jar"/>
+    <property name="cmu_us_kal.jar" location="drivers/cmu_us_kal.jar"/>
+    <property name="cmulex.jar" location="drivers/cmulex.jar"/>
+    <property name="en_us.jar" location="drivers/en_us.jar"/>
 
     <path id="project.path">
         <pathelement location="${build}"/>
+    	<pathelement location="${freetts.jar}"/>
+    	<pathelement location="${cmu_us_kal.jar}"/>
+        <pathelement location="${cmulex.jar}"/>
+        <pathelement location="${en_us.jar}"/>
+
     </path>
 
     <!-- Print out a listing of the most important ant targets -->
@@ -48,30 +57,6 @@ clean               Delete all the compiled files
     <!-- Here we compile the source and test it using junit -->
     <target name="test" depends="compile">
         <mkdir dir="${test}"/>
-
-        <junit printsummary="withOutAndErr" haltonfailure="no">
-            <classpath refid="project.path"/>
-            <formatter type="xml"/>
-            <test name="tests.GroundControlAgentTest" todir="${test}"/>
-        </junit>
-        <junit printsummary="withOutAndErr" haltonfailure="no">
-            <classpath refid="project.path"/>
-            <formatter type="xml"/>
-            <test name="tests.ScenarioParserTest" todir="${test}"/>
-        </junit>
-            <junit printsummary="withOutAndErr" haltonfailure="no">
-                <classpath refid="project.path"/>
-                <formatter type="xml"/>
-                <test name="tests.VoiceTest" todir="${test}"/>
-            </junit>
-
-        <mkdir dir="${test}/html"/>
-        <junitreport todir="${test}/html">
-            <fileset dir="${test}">
-                <include name="TEST-*.xml"/>
-            </fileset>
-            <report format="frames" todir="${test}/html"/>
-        </junitreport>
     </target>
 
 
