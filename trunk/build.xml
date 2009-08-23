@@ -51,7 +51,7 @@ clean               Delete all the compiled files
         <javac srcdir="${src}" classpathref="project.path" destdir="${build}" debug="true">
 		<compilerarg value="-Xlint:unchecked"/>
 	</javac>
-    
+
     </target>
 
     <!-- Here we compile the source and test it using junit -->
@@ -62,10 +62,10 @@ clean               Delete all the compiled files
 
 	<!-- This is the ant task that runs the gui version of the faa controller -->
     <target name="run.gui" depends="compile">
-        <java classname="OpenerTest" classpathref="project.path" fork="true" maxmemory="128m">
-   		</java>     	
+        <java classname="Instructions" classpathref="project.path" fork="true" maxmemory="128m">
+   		</java>
     </target>
-	
+
     <!-- Generates the javadoc for all the packages -->
     <target name="javadoc" depends="compile">
         <mkdir dir="${doc}/javadoc"/>
