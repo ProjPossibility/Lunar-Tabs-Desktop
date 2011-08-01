@@ -36,7 +36,7 @@ public class InstructionGenerator {
 				TGNote singleNote = notes.get(0);
 				int string = singleNote.getString();
 				int fret = singleNote.getValue();
-				return "Play " + guitarModel.getNoteName(string, fret)[0] + ".";
+				return "Play " + guitarModel.getNoteName(string, fret)[0].replaceAll("#", " SHARP") + ".";
 			}
 		}
 	}
