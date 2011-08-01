@@ -8,37 +8,68 @@ import java.util.*;
 
 public class InstructionGenerator {
 	
+	//constants
 	public String[] langMod = {"First", "Second", "Third", "Fourth", "Fifth", "Sixth", "Seventh", "Eighth", "Ninth", "Tenth","Eleventh", "Twelvth", "Thirteenth", "Fourteenth", "Fiveteenth", "Sixteenth", "Seventeenth", "Eighteenth", "Nineteenth", "Twentieth", "Twenty-first", "Twenty-second", "Twenty-third", "Twenty-fourth", "Twenty-fifth", "Twenty-sixth", "Twenty-seventh", "Twenty-eight", "Twenty-ninth", "Thirtieth"};
 		
-	public String getChordName(TGBeat beat) {
-		return "A minor";
+	//state
+	protected GuitarModel guitarModel;
+	
+	//ctr
+	public InstructionGenerator() {
+		guitarModel = new GuitarModel();
 	}
 	
+	/*
+	 * Get play instruction
+	 * ***CALLS ANKIT's FUNCTION***
+	 */
+	public String getPlayInstruction(TGBeat beat) {
+		if(beat.isRestBeat()) {
+			return "Rest Beat.";
+		}
+		else {
+			List<TGNote> notes = SongLoader.getNotesForBeat(beat);		
+			if(notes.size() > 1) {
+				return "Play " + ChordRecognizer.getChordName(notes) + ".";
+			}
+			else {
+				TGNote singleNote = notes.get(0);
+				int string = singleNote.getString();
+				int fret = singleNote.getValue();
+				return "Play " + guitarModel.getNoteName(string, fret)[0] + ".";
+			}
+		}
+	}
+	
+	/*
+	 * Generates instructions of the form (string, fret).
+	 */
 	public List<String> getStringFretInstruction(TGBeat beat) {
 		
 		//rtn
-		List<String> rtn = new ArrayList<String>();
-		
+		List<String> rtn = new ArrayList<String>();		
+
 		//loop
-		for(int x=0; x < beat.countVoices(); x++) {
-			TGVoice voice = beat.getVoice(x);
-			for(int y=0; y < voice.countNotes(); y++) {
+		List<TGNote> notes = SongLoader.getNotesForBeat(beat);
+		for(TGNote note : notes) {
+			
+			//get string, fret
+			int string = note.getString();
+			int fret = note.getValue();
 				
-				//get string and fret
-				TGNote note = voice.getNote(y);
-				int string = note.getString();
-				int fret = note.getValue();
-				
-				//create instruction
-				String instruction = langMod[string] + " string, " + langMod[fret] + "fret.";
-				rtn.add(instruction);
-			}
+			//create instruction
+			String instruction = langMod[string] + " string, " + langMod[fret] + "fret.";
+			rtn.add(instruction);
 		}
 		
+		//rtn
 		return rtn;		
 	}
 	
 	
+	/*
+	 * Returns an instruction about the duration of the beat.
+	 */
 	public String getDurationInstruction(TGBeat beat) {
 
 		//get duration of beat
@@ -147,6 +178,9 @@ public class InstructionGenerator {
 		return null;
 	}
 	
+	/*
+	 * Returns instructions about the effect modifiers of the note.
+	 */
 	public List<String> getNoteEffectsInstructions(TGNote n) {
 		
 		//rtn structure
