@@ -15,6 +15,17 @@ import java.util.*;
 
 public class SongLoader {
 	
+	public static List<TGNote> getNotesForBeat(TGBeat beat) {
+		List<TGNote> rtn = new ArrayList<TGNote>();
+		for(int x=0; x < beat.countVoices(); x++) {
+			TGVoice currentVoice = beat.getVoice(x);
+			for(int y=0; y < currentVoice.countNotes(); y++) {
+				rtn.add(currentVoice.getNote(y));
+			}
+		}
+		return rtn;
+	}
+	
 	public static List<TGBeat> getBeatsforSelection(List<TGMeasure> measures, int m0, int mf) {
 		List<TGBeat> rtn = new ArrayList<TGBeat>();
 		for(int x=m0; x < mf; x++) {
