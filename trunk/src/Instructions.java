@@ -1,11 +1,6 @@
-import java.sql.Array;
-import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import org.herac.tuxguitar.io.base.TGSongLoader;
-import org.herac.tuxguitar.song.factory.TGFactory;
 import org.herac.tuxguitar.song.models.TGBeat;
-import org.herac.tuxguitar.song.models.TGChord;
 import org.herac.tuxguitar.song.models.TGDuration;
 import org.herac.tuxguitar.song.models.TGMeasure;
 import org.herac.tuxguitar.song.models.TGNote;
@@ -44,34 +39,34 @@ public class Instructions
 						for(int z = 0; z < notes.size(); z++)
 						{
 							TGNote n = (TGNote) notes.get(z);
-							TGDuration duration = (TGDuration) voice.getDuration();
+							TGDuration duration = voice.getDuration();
 							if(beat.isRestBeat())
 							{
-								if(duration.getValue() == duration.EIGHTH)
+								if(duration.getValue() == TGDuration.EIGHTH)
 								{
 									System.out.println("This rest is an eighth note");
 								}
-								if(duration.getValue() == duration.HALF)
+								if(duration.getValue() == TGDuration.HALF)
 								{
 									System.out.println("This rest is a half note");
 								}
-								if(duration.getValue() == duration.QUARTER)
+								if(duration.getValue() == TGDuration.QUARTER)
 								{
 									System.out.println("This rest is a quarter note");
 								}
-								if(duration.getValue() == duration.SIXTEENTH)
+								if(duration.getValue() == TGDuration.SIXTEENTH)
 								{
 									System.out.println("This rest is a sixteenth note");
 								}
-								if(duration.getValue() == duration.SIXTY_FOURTH)
+								if(duration.getValue() == TGDuration.SIXTY_FOURTH)
 								{
 									System.out.println("This rest is a sixty-fourth note");
 								}
-								if(duration.getValue() == duration.THIRTY_SECOND)
+								if(duration.getValue() == TGDuration.THIRTY_SECOND)
 								{
 									System.out.println("This rest is a thirty second note");
 								}
-								if(duration.getValue() == duration.WHOLE)
+								if(duration.getValue() == TGDuration.WHOLE)
 								{
 									System.out.println("this rest is a whole note");
 								}
@@ -86,31 +81,31 @@ public class Instructions
 									{
 										System.out.println("for note number " + (a+1) + " play string number " + voice.getNote(a).getString() + " and fret number " + voice.getNote(a).getValue());
 									}
-									if(duration.getValue() == duration.EIGHTH)
+									if(duration.getValue() == TGDuration.EIGHTH)
 									{
 										System.out.println("This chord is an eighth note");
 									}
-									if(duration.getValue() == duration.HALF)
+									if(duration.getValue() == TGDuration.HALF)
 									{
 										System.out.println("This chord is a half note");
 									}
-									if(duration.getValue() == duration.QUARTER)
+									if(duration.getValue() == TGDuration.QUARTER)
 									{
 										System.out.println("This chord is a quarter note");
 									}
-									if(duration.getValue() == duration.SIXTEENTH)
+									if(duration.getValue() == TGDuration.SIXTEENTH)
 									{
 										System.out.println("This chord is a sixteenth note");
 									}
-									if(duration.getValue() == duration.SIXTY_FOURTH)
+									if(duration.getValue() == TGDuration.SIXTY_FOURTH)
 									{
 										System.out.println("This chord is a sixty-fourth note");
 									}
-									if(duration.getValue() == duration.THIRTY_SECOND)
+									if(duration.getValue() == TGDuration.THIRTY_SECOND)
 									{
 										System.out.println("This chord is a thirty second note");
 									}
-									if(duration.getValue() == duration.WHOLE)
+									if(duration.getValue() == TGDuration.WHOLE)
 									{
 										System.out.println("this chord is a whole note");
 									}
@@ -118,31 +113,31 @@ public class Instructions
 								else
 								{
 									System.out.println("Play String number " + n.getString() + " and fret number " + n.getValue());
-									if(duration.getValue() == duration.EIGHTH)
+									if(duration.getValue() == TGDuration.EIGHTH)
 									{
 										System.out.println("This is an eighth note");
 									}
-									if(duration.getValue() == duration.HALF)
+									if(duration.getValue() == TGDuration.HALF)
 									{
 										System.out.println("This is a half note");
 									}
-									if(duration.getValue() == duration.QUARTER)
+									if(duration.getValue() == TGDuration.QUARTER)
 									{
 										System.out.println("This is a quarter note");
 									}
-									if(duration.getValue() == duration.SIXTEENTH)
+									if(duration.getValue() == TGDuration.SIXTEENTH)
 									{
 										System.out.println("This is a sixteenth note");
 									}
-									if(duration.getValue() == duration.SIXTY_FOURTH)
+									if(duration.getValue() == TGDuration.SIXTY_FOURTH)
 									{
 										System.out.println("This is a sixty-fourth note");
 									}
-									if(duration.getValue() == duration.THIRTY_SECOND)
+									if(duration.getValue() == TGDuration.THIRTY_SECOND)
 									{
 										System.out.println("This is a thirty second note");
 									}
-									if(duration.getValue() == duration.WHOLE)
+									if(duration.getValue() == TGDuration.WHOLE)
 									{
 										System.out.println("this is a whole note");
 									}

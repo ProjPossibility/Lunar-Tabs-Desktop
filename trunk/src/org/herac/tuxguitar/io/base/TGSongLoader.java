@@ -7,14 +7,10 @@
 package org.herac.tuxguitar.io.base;
 
 import java.io.BufferedInputStream;
-import java.io.*;
 import java.io.InputStream;
 import java.util.Iterator;
-import org.herac.tuxguitar.song.models.*;
-
 import org.herac.tuxguitar.song.factory.TGFactory;
 import org.herac.tuxguitar.song.models.TGSong;
-import java.util.*;
 
 /**
  * @author julian

@@ -4,7 +4,6 @@ import java.io.FileInputStream;
 import org.herac.tuxguitar.song.factory.TGFactory;
 import org.herac.tuxguitar.song.models.*;
 import org.herac.tuxguitar.io.base.*;
-import java.io.*;
 import com.sun.speech.freetts.Voice;
 import com.sun.speech.freetts.VoiceManager;
 

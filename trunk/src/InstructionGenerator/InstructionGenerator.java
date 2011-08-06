@@ -3,7 +3,6 @@ import org.herac.tuxguitar.song.models.TGBeat;
 import org.herac.tuxguitar.song.models.TGNote;
 import org.herac.tuxguitar.song.models.TGVoice;
 import org.herac.tuxguitar.song.models.TGDuration;
-
 import java.util.*;
 
 public class InstructionGenerator {
@@ -65,8 +64,7 @@ public class InstructionGenerator {
 		//rtn
 		return rtn;		
 	}
-	
-	
+		
 	/*
 	 * Returns an instruction about the duration of the beat.
 	 */
