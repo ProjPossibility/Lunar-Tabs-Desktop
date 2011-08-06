@@ -1,8 +1,3 @@
-import java.io.FileInputStream;
-import java.util.List;
-
-import org.herac.tuxguitar.io.base.TGSongLoader;
-import org.herac.tuxguitar.song.models.*;
 import prateekapi.PrateekAPI;
 
 public class OpenerTest {
