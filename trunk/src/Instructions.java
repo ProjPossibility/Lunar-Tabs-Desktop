@@ -11,6 +11,7 @@ import prateekapi.PrateekAPI;
 
 public class Instructions
 {
+	@SuppressWarnings("unchecked")
 	public static void main (String [] args)
 	{
 		TGSong song = PrateekAPI.loadSong("C:/Users/ATandon/Desktop/Comp Sci/sunshine_of_your_love_ver2.gp3");
@@ -30,8 +31,6 @@ public class Instructions
 				for(int i = 0; i < beats.size(); i++)
 				{
 					TGBeat beat = (TGBeat) beats.get(i);
-					int length = 0;
-					int index = 0;
 					for(int x = 0; x < beat.countVoices(); x++)
 					{
 						TGVoice voice = beat.getVoice(x);

@@ -1,6 +1,4 @@
 package gui;
-import java.awt.Color;
-import java.awt.Component;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -8,16 +6,12 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 
-import javax.accessibility.Accessible;
-import javax.accessibility.AccessibleContext;
-import javax.accessibility.AccessibleRelation;
-import javax.accessibility.AccessibleRelationSet;
 import javax.swing.*;
-
 import org.herac.tuxguitar.song.models.TGSong;
 import org.herac.tuxguitar.song.models.TGTrack;
 import InstructionGenerator.SongLoader;
 
+@SuppressWarnings("serial")
 public class GUI extends JFrame implements ActionListener {
 	
 	public static void main(String[] args) {
@@ -190,7 +184,7 @@ public class GUI extends JFrame implements ActionListener {
 		
 		//load tab file
 		if(e.getSource()==fileButton) {
-		    JFileChooser chooser = new JFileChooser();
+			JFileChooser chooser = new JFileChooser();
 		    FileNameExtensionFilter filter = new FileNameExtensionFilter("Guitar Pro and Power Tab Files", "gp1", "gp2", "gp3", "gp4", "gp5", "ptb");
 	        chooser.setFileFilter(filter);
 		    int returnVal = chooser.showOpenDialog(this);
@@ -207,7 +201,7 @@ public class GUI extends JFrame implements ActionListener {
 			if(errors.length()==0) {
 				
 				//get save file
-			    JFileChooser chooser = new JFileChooser();
+				JFileChooser chooser = new JFileChooser();
 			    FileNameExtensionFilter filter = new FileNameExtensionFilter("Text Files", "txt");
 		        chooser.setFileFilter(filter);
 			    int returnVal = chooser.showSaveDialog(this);
@@ -230,6 +224,5 @@ public class GUI extends JFrame implements ActionListener {
 //				instArea.setText(errors);
 			}
 		}
-		
 	}	
 }
