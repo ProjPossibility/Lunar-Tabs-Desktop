@@ -1,4 +1,5 @@
 package gui;
+import java.awt.Component;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -6,6 +7,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 
+import javax.accessibility.AccessibleComponent;
 import javax.swing.*;
 import org.herac.tuxguitar.song.models.TGSong;
 import org.herac.tuxguitar.song.models.TGTrack;
@@ -50,11 +52,11 @@ public class GUI extends JFrame implements ActionListener {
 		genInstButton = new JButton("Generate Instructions");
 		
 		//screen-reader labels
-		fileButton.getAccessibleContext().setAccessibleName("Click to load tab file");
-		trackNumField.getAccessibleContext().setAccessibleName("Enter Track Number to extract from tab.");
-		mStartField.getAccessibleContext().setAccessibleName("Enter Measure Range (Start) to generate instructions for.");
-		mEndField.getAccessibleContext().setAccessibleName("Enter Measure Range (End) to generate instructions for.");
-		genInstButton.getAccessibleContext().setAccessibleName("Click to export accessible instructions.");
+		setAccessibleLabel(fileButton, "Click to load tab file.");
+		setAccessibleLabel(trackNumField, "Enter Track Number to extract.");
+		setAccessibleLabel(mStartField,"Enter Measure Range (Start) to generate instructions for.");
+		setAccessibleLabel(mEndField,"Enter Measure Range (End) to generate instructions for.");
+		setAccessibleLabel(genInstButton,"Click to export accessible instructions.");
 		
 		//place on panel
 		JPanel p1 = new JPanel();
@@ -89,6 +91,12 @@ public class GUI extends JFrame implements ActionListener {
 		setVisible(true);
 		setResizable(false);
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
+	}
+	
+	public void setAccessibleLabel(JComponent c, String label) {
+		c.getAccessibleContext().setAccessibleName(label);
+		c.getAccessibleContext().setAccessibleDescription(label);
+		c.setToolTipText(label);
 	}
 	
     //returns errors or ""
@@ -191,7 +199,7 @@ public class GUI extends JFrame implements ActionListener {
 		    if(returnVal == JFileChooser.APPROVE_OPTION) {
 		    	String choiceFile = chooser.getSelectedFile().getPath();
 		    	fileField.setText(choiceFile);
-				fileButton.getAccessibleContext().setAccessibleName("Click to load tab file. Tab file currently loaded: " + chooser.getSelectedFile().getName());
+				setAccessibleLabel(fileButton,"Click to load tab file. Tab file currently loaded: " + chooser.getSelectedFile().getName());
 		    }		 
 		}
 		
@@ -212,6 +220,7 @@ public class GUI extends JFrame implements ActionListener {
 			    	}
 			    	try {
 			    		saveFile(choiceFile,data.getInstructions());
+			    		JOptionPane.showMessageDialog(this, "Accessible instructions exported to " + choiceFile + ".", "Instructions exported successfully.", JOptionPane.PLAIN_MESSAGE);
 			    	}
 			    	catch(IOException ex) {
 						JOptionPane.showMessageDialog(this, "File could not be written.", "Failed to export tab", JOptionPane.ERROR_MESSAGE);
