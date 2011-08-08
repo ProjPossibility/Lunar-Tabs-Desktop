@@ -1,7 +1,17 @@
 package gui;
+import java.awt.Color;
+import java.awt.Component;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
+
+import javax.accessibility.Accessible;
+import javax.accessibility.AccessibleContext;
+import javax.accessibility.AccessibleRelation;
+import javax.accessibility.AccessibleRelationSet;
 import javax.swing.*;
 
 import org.herac.tuxguitar.song.models.TGSong;
@@ -24,7 +34,7 @@ public class GUI extends JFrame implements ActionListener {
 	protected JLabel mEndLabel;
 	protected JTextField mEndField;
 	protected JButton genInstButton;
-	protected JTextArea instArea;
+//	protected JTextArea instArea;
 	
 	//state
 	protected PresentationModel data;
@@ -35,14 +45,22 @@ public class GUI extends JFrame implements ActionListener {
 		//init
 		fileButton = new JButton("Load Tab File");
 		fileField = new JTextField(10);
+		fileField.setEnabled(false);
 		trackNumLabel = new JLabel("Enter Track Number: ");
 		trackNumField = new JTextField(10);
 		mStartLabel = new JLabel("Enter Measure Start: ");
 		mStartField = new JTextField(10);
 		mEndLabel = new JLabel("Enter Measure End: ");
 		mEndField = new JTextField(10);
-		instArea = new JTextArea(40,40);
+//		instArea = new JTextArea(40,40);
 		genInstButton = new JButton("Generate Instructions");
+		
+		//screen-reader labels
+		fileButton.getAccessibleContext().setAccessibleName("Click to load tab file");
+		trackNumField.getAccessibleContext().setAccessibleName("Enter Track Number to extract from tab.");
+		mStartField.getAccessibleContext().setAccessibleName("Enter Measure Range (Start) to generate instructions for.");
+		mEndField.getAccessibleContext().setAccessibleName("Enter Measure Range (End) to generate instructions for.");
+		genInstButton.getAccessibleContext().setAccessibleName("Click to export accessible instructions.");
 		
 		//place on panel
 		JPanel p1 = new JPanel();
@@ -57,27 +75,29 @@ public class GUI extends JFrame implements ActionListener {
 		p1.add(mEndField);
 		p1.add(genInstButton);
 		
+		//place in JScrollPane
+//		JScrollPane instPane = new JScrollPane(instArea);
+		
 		//overall layout
-		setLayout(new GridLayout(2,1));
 		add(p1);
-		add(instArea);
+//		add(instPane);
 		
 		//action listeners
 		fileButton.addActionListener(this);
 		genInstButton.addActionListener(this);
 		
-		//model init
+		//model inits
 		data = new PresentationModel();
 		
 		//init
 		setTitle("Lunar Tabs Alpha");
-		setSize(300,200);
+		setSize(400,130);
 		setVisible(true);
+		setResizable(false);
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 	}
 	
-	
-	//errors or ""
+    //returns errors or ""
 	public String parseGUI() {
 		StringBuffer rtn = new StringBuffer();
 		TGSong song  = null;
@@ -159,26 +179,55 @@ public class GUI extends JFrame implements ActionListener {
 		}
 	}
 
+	public void saveFile(String file, String content) throws IOException {
+		PrintWriter w = new PrintWriter(new FileWriter(file));
+		w.print(content);
+		w.flush();
+		w.close();
+	}
+		
 	public void actionPerformed(ActionEvent e) {
 		
 		//load tab file
 		if(e.getSource()==fileButton) {
 		    JFileChooser chooser = new JFileChooser();
+		    FileNameExtensionFilter filter = new FileNameExtensionFilter("Guitar Pro and Power Tab Files", "gp1", "gp2", "gp3", "gp4", "gp5", "ptb");
+	        chooser.setFileFilter(filter);
 		    int returnVal = chooser.showOpenDialog(this);
 		    if(returnVal == JFileChooser.APPROVE_OPTION) {
-		    	String choice = chooser.getSelectedFile().getPath();
-		    	fileField.setText(choice);
+		    	String choiceFile = chooser.getSelectedFile().getPath();
+		    	fileField.setText(choiceFile);
+				fileButton.getAccessibleContext().setAccessibleName("Click to load tab file. Tab file currently loaded: " + chooser.getSelectedFile().getName());
 		    }		 
 		}
 		
-		//update instructions text area
+		//save text instructions
 		if(e.getSource()==genInstButton) {
 			String errors = parseGUI();
 			if(errors.length()==0) {
-				instArea.setText(data.getInstructions());
+				
+				//get save file
+			    JFileChooser chooser = new JFileChooser();
+			    FileNameExtensionFilter filter = new FileNameExtensionFilter("Text Files", "txt");
+		        chooser.setFileFilter(filter);
+			    int returnVal = chooser.showSaveDialog(this);
+			    if(returnVal == JFileChooser.APPROVE_OPTION) {
+			    	String choiceFile = chooser.getSelectedFile().getPath();
+			    	if(!choiceFile.endsWith(".txt")) {
+			    		choiceFile = choiceFile + ".txt";
+			    	}
+			    	try {
+			    		saveFile(choiceFile,data.getInstructions());
+			    	}
+			    	catch(IOException ex) {
+						JOptionPane.showMessageDialog(this, "File could not be written.", "Failed to export tab", JOptionPane.ERROR_MESSAGE);
+			    	}
+			    }
+//				instArea.setText(data.getInstructions());
 			}
 			else {
-				instArea.setText(errors);
+				JOptionPane.showMessageDialog(this, errors, "Failed to export tab", JOptionPane.ERROR_MESSAGE);
+//				instArea.setText(errors);
 			}
 		}
 		

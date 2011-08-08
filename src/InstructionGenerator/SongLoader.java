@@ -47,15 +47,8 @@ public class SongLoader {
 		return song.getTrack(trackIndex);
 	}
 	
-	public static TGSong loadSong(String file) {
+	public static TGSong loadSong(String file) throws Exception{
 		TGSongLoader l = new TGSongLoader();
-		try {
-			return l.load(new TGFactory(), new FileInputStream(file));
-		}
-		catch(Exception e) {
-			System.out.println("Song could not be loaded. See error trace.");
-			e.printStackTrace();
-			return null;
-		}
+		return l.load(new TGFactory(), new FileInputStream(file));
 	}
 }
