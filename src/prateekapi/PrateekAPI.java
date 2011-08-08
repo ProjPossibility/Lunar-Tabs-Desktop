@@ -27,7 +27,6 @@ public class PrateekAPI {
 	
 	public static void say(String str) {
 		if(!voiceInit) {
-			Voice[] voices = voiceManager.getVoices();
 			kevin = voiceManager.getVoice("kevin16");
 			kevin.allocate();
 			kevin.setStyle("causual");
