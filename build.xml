@@ -1,4 +1,4 @@
-<project name="faacontrol" default="targets" basedir=".">
+<project name="Lunar Tabs Pro" default="targets" basedir=".">
 
   <!-- set global properties for this build -->
     <property name="src" location="src"/>
@@ -62,7 +62,7 @@ clean               Delete all the compiled files
 
 	<!-- This is the ant task that runs the gui version of the faa controller -->
     <target name="run.gui" depends="compile">
-        <java classname="Instructions" classpathref="project.path" fork="true" maxmemory="128m">
+        <java classname="gui.GUI" classpathref="project.path" fork="true" maxmemory="128m">
    		</java>
     </target>
 
@@ -72,14 +72,9 @@ clean               Delete all the compiled files
         <javadoc destdir="${doc}/javadoc">
             <classpath refid="project.path" />
             <packageset dir="${src}" defaultexcludes="yes">
-                <include name="agent"/>
-				<include name="airport"/>
-                <include name="airport/interfaces"/>
-                <include name="airport/mock"/>
-                <include name="airport/test"/>
-				<include name="airport/objects"/>
                 <include name="gui"/>
-				<include name="logic"/>
+				<include name="InstructionGenerator"/>
+                <include name="prateekAPI"/>
             </packageset>
         </javadoc>
     </target>
@@ -112,9 +107,9 @@ clean               Delete all the compiled files
 
         <copy todir="${dist}" file="build.xml"/>
 
-		<mkdir dir="${versions}/airportV${version}"/>
-        <zip destfile="${versions}/airportV${version}/airportV${version}.zip">
-            <zipfileset dir="${dist}" prefix="airportV${version}"/>
+		<mkdir dir="${versions}/lunartabsproV${version}"/>
+        <zip destfile="${versions}/lunartabsproV${version}/lunartabsproV${version}.zip">
+            <zipfileset dir="${dist}" prefix="lunartabsproV${version}"/>
         </zip>
 
         <delete dir="${dist}"/>
