@@ -11,7 +11,7 @@ import InstructionGenerator.SongLoader;
 
 public class PresentationModel {
 	
-	public static void main(String[] args) {
+	public static void main(String[] args) throws Exception {
 		TGSong song  = SongLoader.loadSong("/Users/prateek/Desktop/guitar/bat.gp5");
 		PresentationModel p = new PresentationModel();
 		p.setSong(song);
@@ -26,6 +26,7 @@ public class PresentationModel {
 	protected int trackNum;
 	protected int mRangeStart;
 	protected int mRangeEnd;
+	protected List<String> instructionsList;
 	protected String instructions;
 	
 	//state
@@ -37,22 +38,22 @@ public class PresentationModel {
 		trackNum = -1;
 		mRangeStart = -1;
 		mRangeEnd = -1;
-		instructions = "";
+		instructionsList = new ArrayList<String>();
 		iGenerator = new InstructionGenerator();
 	}
 	
 	/**
 	 * Dynamically generates instructions
 	 */
-	public String genInstructions() {
-		
+	public List<String> genInstructions() {
+				
 		//see if can return
 		if(song==null || trackNum==-1 || mRangeStart==-1 || mRangeEnd==-1) {
-			return "";
+			return null;
 		}
 		
 		//rtn
-		StringBuffer rtn = new StringBuffer();
+		List<String> rtn = new ArrayList<String>();
 		
 		//load beats
 		TGTrack track  = SongLoader.getTrack(song,trackNum-1);
@@ -60,13 +61,18 @@ public class PresentationModel {
 		List<TGBeat> beats = SongLoader.getBeatsforSelection(measures, mRangeStart-1, mRangeEnd-1);
 		
 		//generate instructions for beats
+		instructions="";
 		for(TGBeat beat : beats) {
-			rtn.append(iGenerator.getPlayInstruction(beat) + "\n");
+			String instruction  = iGenerator.getPlayInstruction(beat);
+			rtn.add(instruction);
+			instructions = instructions + instruction + "\n";
 		}
+				
+		//make rtn
+		instructionsList = rtn;
 		
 		//return
-		instructions = rtn.toString();
-		return rtn.toString();
+		return rtn;
 	}
 		
 	/**
@@ -105,21 +111,20 @@ public class PresentationModel {
 	public void setmRangeEnd(int mRangeEnd) {
 		this.mRangeEnd = mRangeEnd;
 	}	
+	
 	/**
 	 * @return the instructions
 	 */
-	public String getInstructions() {
-		return instructions;
+	public List<String> getInstructionsList() {
+		return instructionsList;
 	}
-
 
 	/**
 	 * @param instructions the instructions to set
 	 */
-	public void setInstructions(String instructions) {
-		this.instructions = instructions;
+	public void setInstructionsList(List<String> instructions) {
+		this.instructionsList = instructions;
 	}
-
 
 	/**
 	 * @return the trackNum
@@ -135,4 +140,18 @@ public class PresentationModel {
 		this.trackNum = trackNum;
 	}
 
+	/**
+	 * @return the instructions
+	 */
+	public String getInstructions() {
+		return instructions;
+	}
+
+	/**
+	 * @param instructions the instructions to set
+	 */
+	public void setInstructions(String instructions) {
+		this.instructions = instructions;
+	}
+		
 }
