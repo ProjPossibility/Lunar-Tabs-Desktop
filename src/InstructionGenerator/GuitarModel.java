@@ -9,9 +9,20 @@ public class GuitarModel {
 	//state
 	protected int[] tuning;
 	
+	//singleton
+	public static GuitarModel instance;
+	
 	//ctr
-	public GuitarModel() {
+	private GuitarModel() {
 		tuning = getStandardTuning();
+	}
+	
+	//singleton pattern
+	public static GuitarModel getInstance() {
+		if(instance==null) {
+			instance = new GuitarModel();
+		}
+		return instance;
 	}
 	
 	//input string 1-6, fret number 1-...
@@ -32,6 +43,30 @@ public class GuitarModel {
 		else {
 			return new String[] {n1};
 		}		
+	}
+	
+	public int getNoteIndex(String note) {
+		if(note.indexOf("b") > -1) {
+			
+			//search flats
+			for(int x=0; x < MUSIC_NOTES_FLAT.length; x++) {
+				if(note.equalsIgnoreCase(MUSIC_NOTES_FLAT[x]))
+					return x;
+			}
+			
+		}
+		else {
+
+			//search sharps
+			for(int x=0; x < MUSIC_NOTES_SHARP.length; x++) {
+				if(note.equalsIgnoreCase(MUSIC_NOTES_SHARP[x]))
+					return x;
+			}
+			
+		}
+		
+		//not found
+		return -1;
 	}
 	
 	public int[] getStandardTuning() {
