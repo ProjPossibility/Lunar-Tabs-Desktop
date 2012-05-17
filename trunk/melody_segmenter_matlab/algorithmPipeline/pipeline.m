@@ -1,12 +1,17 @@
+%load drivers
+[extractor,tracksMap] = loadJava();
+
+%globals
+global TRACK_NUM;
+
 %params
-TRACK_NUM=1;
+TRACK_NUM=5;
 MIN_NGRAM_SIZE = 7;
 MAX_NGRAM_SIZE = 60;
-NGRAM_LIM=20;
+NGRAM_LIM=30;
 
-%load into matlab
+%load track
 tic
-loadJava();
 trackCell = toMatlab(tracksMap);
 str = trackCell.melodyStrs{TRACK_NUM};
 mel = trackCell.mels{TRACK_NUM};
@@ -39,9 +44,9 @@ toc
 %generate scores for segmentations and sort
 tic
 scores = scoreSegmentations(finStates, finActSacks, grams);
-scores = sortrows(scores,[-2,-10]);
+scores = sortrows(scores,-2);
 toc
 
 %show result
 figure(42);
-showSegmentation(str, mel, grams, finActSacks{scores(1,1)})
+showSegmentation(str, mel, grams, finActSacks{scores(1,1)},rankedList(:,1),extractor);
