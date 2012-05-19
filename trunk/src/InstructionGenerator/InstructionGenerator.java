@@ -15,7 +15,6 @@ public class InstructionGenerator {
 	
 	//ctr
 	public InstructionGenerator() {
-		guitarModel = new GuitarModel();
 	}
 	
 	/*
