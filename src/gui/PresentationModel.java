@@ -12,12 +12,12 @@ import InstructionGenerator.SongLoader;
 public class PresentationModel {
 	
 	public static void main(String[] args) throws Exception {
-		TGSong song  = SongLoader.loadSong("/Users/prateek/Desktop/guitar/bat.gp5");
+		TGSong song  = SongLoader.loadSong("/Users/prateek/Desktop/bat.gp3");
 		PresentationModel p = new PresentationModel();
 		p.setSong(song);
 		p.setTrackNum(1);
 		p.setmRangeStart(1);
-		p.setmRangeEnd(3);
+		p.setmRangeEnd(20);
 		System.out.println(p.genInstructions());
 	}
 
@@ -41,7 +41,7 @@ public class PresentationModel {
 		instructionsList = new ArrayList<String>();
 		iGenerator = new InstructionGenerator();
 	}
-	
+		
 	/**
 	 * Dynamically generates instructions
 	 */

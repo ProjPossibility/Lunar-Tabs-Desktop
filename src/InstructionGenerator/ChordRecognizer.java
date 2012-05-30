@@ -27,7 +27,6 @@ public class ChordRecognizer {
 		int[] scores = new int[chordDB.size()];
 		for(int x=0; x < chordDB.size();x++) {
 			String chord = chordDB.get(x);
-			System.out.println(chord);
 			int score = 0;
 			for(int y=0; y < chordNotes.size(); y++) {
 				if(chord.indexOf(chordNotes.get(y)) > -1) {
@@ -102,7 +101,7 @@ class ChordDBGenerator {
 		for(int x=0; x < GuitarModel.MUSIC_NOTES_SHARP.length; x++) {
 			for(int y=0; y < formulas.size(); y++) {
 				chordNotes.add(generateChord(GuitarModel.MUSIC_NOTES_SHARP[x],formulas.get(y),getDescriptors()[y]));
-				chordNames.add(GuitarModel.MUSIC_NOTES_SHARP[x] + " " + getDescriptors()[y]);
+				chordNames.add(GuitarModel.MUSIC_NOTES_SHARP[x].replaceAll("#", "-Sharp") + " " + getDescriptors()[y]);
 			}
 		}
 	}

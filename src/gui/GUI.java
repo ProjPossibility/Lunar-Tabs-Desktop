@@ -6,6 +6,8 @@ import java.awt.event.ActionListener;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.accessibility.AccessibleComponent;
 import javax.swing.*;
@@ -24,7 +26,8 @@ public class GUI extends JFrame implements ActionListener {
 	protected JButton fileButton;
 	protected JTextField fileField;
 	protected JLabel trackNumLabel;
-	protected JTextField trackNumField;
+	protected JComboBox trackBox;
+//	protected JTextField trackNumField;
 	protected JLabel mStartLabel;
 	protected JTextField mStartField;
 	protected JLabel mEndLabel;
@@ -42,8 +45,9 @@ public class GUI extends JFrame implements ActionListener {
 		fileButton = new JButton("Load Tab File");
 		fileField = new JTextField(10);
 		fileField.setEnabled(false);
-		trackNumLabel = new JLabel("Enter Track Number: ");
-		trackNumField = new JTextField(10);
+		trackNumLabel = new JLabel("Choose Track: ");
+		trackBox = new JComboBox();
+//		trackNumField = new JTextField(10);
 		mStartLabel = new JLabel("Enter Measure Start: ");
 		mStartField = new JTextField(10);
 		mEndLabel = new JLabel("Enter Measure End: ");
@@ -53,7 +57,8 @@ public class GUI extends JFrame implements ActionListener {
 		
 		//screen-reader labels
 		setAccessibleLabel(fileButton, "Click to load tab file.");
-		setAccessibleLabel(trackNumField, "Enter Track Number to extract.");
+		setAccessibleLabel(trackBox, "Choose track");
+//		setAccessibleLabel(trackNumField, "Enter Track Number to extract.");
 		setAccessibleLabel(mStartField,"Enter Measure Range (Start) to generate instructions for.");
 		setAccessibleLabel(mEndField,"Enter Measure Range (End) to generate instructions for.");
 		setAccessibleLabel(genInstButton,"Click to export accessible instructions.");
@@ -64,7 +69,8 @@ public class GUI extends JFrame implements ActionListener {
 		p1.add(fileButton);
 		p1.add(fileField);
 		p1.add(trackNumLabel);
-		p1.add(trackNumField);
+		p1.add(trackBox);
+//		p1.add(trackNumField);
 		p1.add(mStartLabel);
 		p1.add(mStartField);
 		p1.add(mEndLabel);
@@ -99,6 +105,22 @@ public class GUI extends JFrame implements ActionListener {
 		c.setToolTipText(label);
 	}
 	
+	public void populateComboBox(String file) {
+		StringBuffer rtn = new StringBuffer();
+		try {
+			TGSong song = SongLoader.loadSong(file);
+			DefaultComboBoxModel aModel = new DefaultComboBoxModel();
+			for(int x=0; x < song.countTracks(); x++) {
+				aModel.addElement(song.getTrack(x).getName());
+			}
+			trackBox.setModel(aModel);
+	    	setAccessibleLabel(fileButton,"Click to load tab file. Tab file currently loaded: " + file);
+		}
+		catch(Exception e) {
+			rtn.append("Tab could not be loaded.");
+		}
+	}
+	
     //returns errors or ""
 	public String parseGUI() {
 		StringBuffer rtn = new StringBuffer();
@@ -123,6 +145,8 @@ public class GUI extends JFrame implements ActionListener {
 		catch(Exception e){
 			rtn.append("Tab could not be loaded.\n");
 		}
+
+		/*
 		try {
 			trackNum = Integer.parseInt(trackNumField.getText());
 			if(songOkay && (trackNum < 1 || trackNum > song.countTracks())) {
@@ -134,6 +158,13 @@ public class GUI extends JFrame implements ActionListener {
 		}
 		catch(Exception e) {
 			rtn.append("Invalid Track Number. \n");
+		}*/
+		try {
+			trackNum = trackBox.getSelectedIndex()+1;
+			trackNumOkay = true;
+		}
+		catch(Exception e) {
+			rtn.append("Invalid Track Selection. \n");
 		}
 		try {
 			mStart = Integer.parseInt(mStartField.getText());
@@ -199,7 +230,7 @@ public class GUI extends JFrame implements ActionListener {
 		    if(returnVal == JFileChooser.APPROVE_OPTION) {
 		    	String choiceFile = chooser.getSelectedFile().getPath();
 		    	fileField.setText(choiceFile);
-				setAccessibleLabel(fileButton,"Click to load tab file. Tab file currently loaded: " + chooser.getSelectedFile().getName());
+		    	this.populateComboBox(choiceFile);
 		    }		 
 		}
 		
