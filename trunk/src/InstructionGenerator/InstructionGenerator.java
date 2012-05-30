@@ -9,10 +9,7 @@ public class InstructionGenerator {
 	
 	//constants
 	public String[] langMod = {"First", "Second", "Third", "Fourth", "Fifth", "Sixth", "Seventh", "Eighth", "Ninth", "Tenth","Eleventh", "Twelvth", "Thirteenth", "Fourteenth", "Fiveteenth", "Sixteenth", "Seventeenth", "Eighteenth", "Nineteenth", "Twentieth", "Twenty-first", "Twenty-second", "Twenty-third", "Twenty-fourth", "Twenty-fifth", "Twenty-sixth", "Twenty-seventh", "Twenty-eight", "Twenty-ninth", "Thirtieth"};
-		
-	//state
-	protected GuitarModel guitarModel;
-	
+			
 	//ctr
 	public InstructionGenerator() {
 	}
@@ -23,18 +20,18 @@ public class InstructionGenerator {
 	 */
 	public String getPlayInstruction(TGBeat beat) {
 		if(beat.isRestBeat()) {
-			return "Rest Beat.";
+			return getDurationInstruction(beat);
 		}
 		else {
 			List<TGNote> notes = SongLoader.getNotesForBeat(beat);		
 			if(notes.size() > 1) {
-				return "Play " + ChordRecognizer.getChordName(notes) + ".";
+				return "Play " + ChordRecognizer.getChordName(notes) + ". " + getDurationInstruction(beat);
 			}
 			else {
 				TGNote singleNote = notes.get(0);
 				int string = singleNote.getString();
 				int fret = singleNote.getValue();
-				return "Play " + guitarModel.getNoteName(string, fret)[0].replaceAll("#", " SHARP") + ".";
+				return "Play " + GuitarModel.getInstance().getNoteName(string, fret)[0].replaceAll("#", "-sharp") + ". " + getDurationInstruction(beat);
 			}
 		}
 	}
