@@ -8,6 +8,12 @@
     <property name="cmu_us_kal.jar" location="drivers/cmu_us_kal.jar"/>
     <property name="cmulex.jar" location="drivers/cmulex.jar"/>
     <property name="en_us.jar" location="drivers/en_us.jar"/>
+	<property name="sphinx4.jar" location="drivers/sphinx4.jar"/>
+	<property name="jsapi.jar" location="drivers/jsapi.jar"/>
+	<property name="WSJ_8gau_13dCep_16k_40mel_130Hz_6800Hz.jar" location="drivers/WSJ_8gau_13dCep_16k_40mel_130Hz_6800Hz.jar"/>
+	<property name="WSJ_8gau_13dCep_8kHz_31mel_200Hz_3500Hz.jar" location="drivers/WSJ_8gau_13dCep_8kHz_31mel_200Hz_3500Hz.jar"/>
+	<property name="TIDIGITS_8gau_13dCep_16k_40mel_130Hz_6800Hz.jar" location="drivers/TIDIGITS_8gau_13dCep_16k_40mel_130Hz_6800Hz.jar"/>
+	<property name="tags.jar" location="drivers/tags.jar"/>
 
     <path id="project.path">
         <pathelement location="${build}"/>
@@ -15,7 +21,12 @@
     	<pathelement location="${cmu_us_kal.jar}"/>
         <pathelement location="${cmulex.jar}"/>
         <pathelement location="${en_us.jar}"/>
-
+        <pathelement location="${sphinx4.jar}"/>
+        <pathelement location="${jsapi.jar}"/>
+        <pathelement location="${WSJ_8gau_13dCep_16k_40mel_130Hz_6800Hz.jar}"/>
+        <pathelement location="${WSJ_8gau_13dCep_8kHz_31mel_200Hz_3500Hz.jar}"/>
+        <pathelement location="${TIDIGITS_8gau_13dCep_16k_40mel_130Hz_6800Hz.jar}"/>
+        <pathelement location="${tags.jar}"/>
     </path>
 
     <!-- Print out a listing of the most important ant targets -->
@@ -49,9 +60,11 @@ clean               Delete all the compiled files
 		-->
 
         <javac srcdir="${src}" classpathref="project.path" destdir="${build}" debug="true">
-		<compilerarg value="-Xlint:unchecked"/>
+		<compilerarg value="-Xlint:unchecked"/>        	
+	        	
 	</javac>
-
+	<!--<copy file="${src}/speech/hello.gram"
+	      todir="${build}/speech/helloworld/"/> -->
     </target>
 
     <!-- Here we compile the source and test it using junit -->
@@ -62,7 +75,7 @@ clean               Delete all the compiled files
 
 	<!-- This is the ant task that runs the gui version of the faa controller -->
     <target name="run.gui" depends="compile">
-        <java classname="gui.GUI" classpathref="project.path" fork="true" maxmemory="128m">
+        <java classname="gui.GUI" classpathref="project.path" fork="true" maxmemory="1028m">
    		</java>
     </target>
 
@@ -90,19 +103,9 @@ clean               Delete all the compiled files
             <fileset dir="${src}"/>
         </copy>
 
-        <mkdir dir="${dist}/resource"/>
-        <copy todir="${dist}/resource">
-            <fileset dir="${resource}"/>
-        </copy>
-
 		<mkdir dir="${dist}/drivers"/>
         <copy todir="${dist}/drivers">
             <fileset dir="${drivers}"/>
-        </copy>
-
-        <mkdir dir="${dist}/doc"/>
-        <copy todir="${dist}/doc">
-            <fileset dir="${doc}"/>
         </copy>
 
         <copy todir="${dist}" file="build.xml"/>

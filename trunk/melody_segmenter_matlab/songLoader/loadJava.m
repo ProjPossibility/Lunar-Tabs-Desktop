@@ -1,7 +1,7 @@
 function [extractor,tracksMap] = loadJava()
 
 %set up java class path
-javaaddpath(fullfile('melody_segmenter_matlab/songloader/','SongExtractor.jar'));
+javaaddpath(fullfile('melody_segmenter_matlab/songloader/','SongExtractor2.jar'));
 import api.tuxguitar.MelodyExtractor.*;
 
 %load melody extractor

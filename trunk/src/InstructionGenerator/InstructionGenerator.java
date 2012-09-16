@@ -1,14 +1,16 @@
 package InstructionGenerator;
-import org.herac.tuxguitar.song.models.TGBeat;
-import org.herac.tuxguitar.song.models.TGNote;
-import org.herac.tuxguitar.song.models.TGVoice;
-import org.herac.tuxguitar.song.models.TGDuration;
+import tg_import.TuxGuitarUtil;
+import tg_import.song.models.TGBeat;
+import tg_import.song.models.TGDuration;
+import tg_import.song.models.TGNote;
+import tg_import.song.models.TGVoice;
+
 import java.util.*;
 
 public class InstructionGenerator {
 	
 	//constants
-	public String[] langMod = {"First", "Second", "Third", "Fourth", "Fifth", "Sixth", "Seventh", "Eighth", "Ninth", "Tenth","Eleventh", "Twelvth", "Thirteenth", "Fourteenth", "Fiveteenth", "Sixteenth", "Seventeenth", "Eighteenth", "Nineteenth", "Twentieth", "Twenty-first", "Twenty-second", "Twenty-third", "Twenty-fourth", "Twenty-fifth", "Twenty-sixth", "Twenty-seventh", "Twenty-eight", "Twenty-ninth", "Thirtieth"};
+	public String[] langMod = {"Open","First", "Second", "Third", "Fourth", "Fifth", "Sixth", "Seventh", "Eighth", "Ninth", "Tenth","Eleventh", "Twelvth", "Thirteenth", "Fourteenth", "Fiveteenth", "Sixteenth", "Seventeenth", "Eighteenth", "Nineteenth", "Twentieth", "Twenty-first", "Twenty-second", "Twenty-third", "Twenty-fourth", "Twenty-fifth", "Twenty-sixth", "Twenty-seventh", "Twenty-eight", "Twenty-ninth", "Thirtieth", "Thirty-first","Thirty-second","Thirty-third","Thirty-fourth","Thirty-fifth","Thirty-sixth","Thirty-seventh","Thirty-eigth","Thirty-nineth","Fortieth"};
 			
 	//ctr
 	public InstructionGenerator() {
@@ -16,22 +18,21 @@ public class InstructionGenerator {
 	
 	/*
 	 * Get play instruction
-	 * ***CALLS ANKIT's FUNCTION***
 	 */
 	public String getPlayInstruction(TGBeat beat) {
 		if(beat.isRestBeat()) {
 			return getDurationInstruction(beat);
 		}
 		else {
-			List<TGNote> notes = SongLoader.getNotesForBeat(beat);		
+			List<TGNote> notes = TuxGuitarUtil.getNotesForBeat(beat);		
 			if(notes.size() > 1) {
-				return "Play " + ChordRecognizer.getChordName(notes) + ". " + getDurationInstruction(beat);
+				return ChordRecognizer.getChordName(notes) + " chord, " + getDurationInstruction(beat) + ".";
 			}
 			else {
 				TGNote singleNote = notes.get(0);
 				int string = singleNote.getString();
 				int fret = singleNote.getValue();
-				return "Play " + GuitarModel.getInstance().getNoteName(string, fret)[0].replaceAll("#", "-sharp") + ". " + getDurationInstruction(beat);
+				return GuitarModel.getInstance().getNoteName(string, fret)[0].replaceAll("#", "-sharp") + ", " + getDurationInstruction(beat) + ".";
 			}
 		}
 	}
@@ -39,26 +40,37 @@ public class InstructionGenerator {
 	/*
 	 * Generates instructions of the form (string, fret).
 	 */
-	public List<String> getStringFretInstruction(TGBeat beat) {
-		
-		//rtn
-		List<String> rtn = new ArrayList<String>();		
-
-		//loop
-		List<TGNote> notes = SongLoader.getNotesForBeat(beat);
-		for(TGNote note : notes) {
-			
-			//get string, fret
-			int string = note.getString();
-			int fret = note.getValue();
-				
-			//create instruction
-			String instruction = langMod[string] + " string, " + langMod[fret] + "fret.";
-			rtn.add(instruction);
+	public String getStringFretInstruction(TGBeat beat) {
+		if(beat.isRestBeat()) {
+			return getDurationInstruction(beat);
 		}
+		else {
 		
-		//rtn
-		return rtn;		
+			//loop for notes
+			List<TGNote> notes = TuxGuitarUtil.getNotesForBeat(beat);
+			String instruction = "";
+			for(TGNote note : notes) {
+				
+				//get string, fret
+				int string = note.getString();
+				int fret = note.getValue();
+				
+				//keep from crashing
+				if(string >= langMod.length)
+					string = langMod.length-1;
+				if(fret >= langMod.length)
+					fret = langMod.length - 1;
+				
+				//create instruction
+				instruction = instruction + " " + langMod[string] + " string, " + langMod[fret] + " fret. ";
+			}
+			
+			//add duration
+			instruction = instruction + getDurationInstruction(beat);
+			
+			//rtn
+			return instruction;		
+		}
 	}
 		
 	/*
@@ -108,62 +120,62 @@ public class InstructionGenerator {
 			{
 				if(duration.getValue() == TGDuration.EIGHTH)
 				{
-					return "This chord is an eighth note.";
+					return "eighth note";
 				}
 				if(duration.getValue() == TGDuration.HALF)
 				{
-					return "This chord is a half note.";
+					return "half note";
 				}
 				if(duration.getValue() == TGDuration.QUARTER)
 				{
-					return "This chord is a quarter note.";
+					return "quarter note";
 				}
 				if(duration.getValue() == TGDuration.SIXTEENTH)
 				{
-					return "This chord is a sixteenth note.";
+					return "sixteenth note";
 				}
 				if(duration.getValue() == TGDuration.SIXTY_FOURTH)
 				{
-					return "This chord is a sixty-fourth note.";
+					return "sixty-fourth note";
 				}
 				if(duration.getValue() == TGDuration.THIRTY_SECOND)
 				{
-					return "This chord is a thirty-second note.";
+					return "thirty-second note";
 				}
 				if(duration.getValue() == TGDuration.WHOLE)
 				{
-					return "This chord is a whole note.";
+					return "whole note";
 				}
 			}
 			else
 			{
 				if(duration.getValue() == TGDuration.EIGHTH)
 				{
-					return "Eighth note.";
+					return "eighth note";
 				}
 				if(duration.getValue() == TGDuration.HALF)
 				{
-					return "Half note.";
+					return "half note";
 				}
 				if(duration.getValue() == TGDuration.QUARTER)
 				{
-					return "Quarter note.";
+					return "quarter note";
 				}
 				if(duration.getValue() == TGDuration.SIXTEENTH)
 				{
-					return "Sixteenth note.";
+					return "sixteenth note";
 				}
 				if(duration.getValue() == TGDuration.SIXTY_FOURTH)
 				{
-					return "Sixty-fourth note.";
+					return "sixty-fourth note";
 				}
 				if(duration.getValue() == TGDuration.THIRTY_SECOND)
 				{
-					return "Thirty-second note.";
+					return "thirty-second note";
 				}
 				if(duration.getValue() == TGDuration.WHOLE)
 				{
-					return "Whole note.";
+					return "whole note";
 				}
 			}
 		}
