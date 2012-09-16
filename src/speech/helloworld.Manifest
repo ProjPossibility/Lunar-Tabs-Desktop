@@ -1,0 +1,2 @@
+Main-Class: voicerecognition1.HelloWorld
+Class-Path: ../drivers/sphinx4.jar ../drivers/jsapi.jar ../drivers/WSJ_8gau_13dCep_16k_40mel_130Hz_6800Hz.jar
