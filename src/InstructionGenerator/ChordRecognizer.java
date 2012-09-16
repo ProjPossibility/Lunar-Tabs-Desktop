@@ -1,6 +1,7 @@
 package InstructionGenerator;
 import java.util.*;
-import org.herac.tuxguitar.song.models.TGNote;
+
+import tg_import.song.models.TGNote;
 
 public class ChordRecognizer {
 			
@@ -20,8 +21,10 @@ public class ChordRecognizer {
 	}
 	
 	protected static String getClosestMatch(List<String> chordNotes) {
-		List<String> chordDB = ChordDBGenerator.getInstance().getChordNotes();
-		List<String> chordNames = ChordDBGenerator.getInstance().getChordNames();
+		ChordDBGenerator.getInstance();
+		List<String> chordDB = ChordDBGenerator.getChordNotes();
+		ChordDBGenerator.getInstance();
+		List<String> chordNames = ChordDBGenerator.getChordNames();
 		
 		//compute scores
 		int[] scores = new int[chordDB.size()];
