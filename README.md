@@ -1,4 +1,4 @@
-# Lunar Tabs Pro: Accessible Guitar Tab Reader (for Desktop)
+# Lunar Tabs Desktop: Accessible Guitar Tab Reader (for Desktop)
 Desktop Version of Lunar Tabs: Accessible Guitar Tab Reader
 
 About
