@@ -5,7 +5,7 @@ About
 The purpose of Lunar Tabs is to give a person who is blind the ability to more easily access electronic guitar tablature (tabs) by converting electronic tabs to a format that a screen reader can process.
 
 Latest Download
-LUNAR TABS: DESKTOP (VERSION 4) BETA. Download <a href="https://drive.google.com/file/d/0B4HG-Hu1gWQeMjlNZGlrSThsYWs/edit?usp=sharing">here</a>
+LUNAR TABS: DESKTOP (VERSION 4) BETA. Download <a href="https://drive.google.com/file/d/0B4HG-Hu1gWQeMjlNZGlrSThsYWs/edit?usp=sharing">here</a>.
 
 or download older (deprecated 2-3 years) versions that may be potentially more stable from "Downloads" section
 
