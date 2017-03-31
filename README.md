@@ -10,6 +10,9 @@ LUNAR TABS: DESKTOP (VERSION 4) BETA. Download <a href="https://drive.google.com
 or download older (deprecated 2-3 years) versions that may be potentially more stable from "Downloads" section
 
 User Guide/Compatability
+
+If you do not have it already, all users need to install Java (https://java.com/en/download/)
+
 For Windows/Linux Users: NVDA seems to work the best with LunarTabs. JAWS may or may not work due to underlying challenges w/ java access bridge.
 
 For Mac Users: Lunar Tabs works great with Voice Over!
